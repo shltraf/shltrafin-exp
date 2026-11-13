@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b10">
+  <title>Now Loading...</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080b10;
+      --fg: #eef3f7;
+      --muted: #75818d;
+      --accent: #b9f2df;
+      --line: rgba(220, 240, 235, .13);
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; }
+    body {
+      min-height: 100svh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(ellipse at 50% 44%, rgba(49, 105, 99, .15), transparent 42%),
+        linear-gradient(145deg, #0b1017, var(--bg) 62%);
+      color: var(--fg);
+      font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; opacity: .13;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+    }
+    .frame {
+      width: min(440px, calc(100vw - 48px));
+      text-align: center;
+      position: relative;
+      animation: appear 900ms cubic-bezier(.2,.7,.2,1) both;
+    }
+    .symbol {
+      width: 74px; height: 74px; margin: 0 auto 38px;
+      position: relative; display: grid; place-items: center;
+    }
+    .ring {
+      position: absolute; inset: 0; border: 1px solid var(--line);
+      border-radius: 50%;
+    }
+    .ring::before {
+      content: ""; position: absolute; inset: -1px; border-radius: inherit;
+      border: 1px solid transparent; border-top-color: var(--accent);
+      border-right-color: rgba(185,242,223,.35);
+      animation: spin 1.6s linear infinite;
+    }
+    .core {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 22px rgba(185,242,223,.75);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    .eyebrow {
+      color: var(--muted); font-size: 10px; letter-spacing: .34em;
+      text-transform: uppercase; margin-bottom: 15px;
+    }
+    h1 {
+      margin: 0; font-size: clamp(25px, 6vw, 34px); font-weight: 500;
+      letter-spacing: .13em; text-indent: .13em;
+    }
+    h1 span { color: var(--accent); }
+    .sub {
+      margin: 17px 0 34px; color: #89949e; font-size: 12px;
+      letter-spacing: .08em;
+    }
+    .track {
+      width: 100%; height: 2px; background: rgba(255,255,255,.09);
+      overflow: hidden; position: relative;
+    }
+    .track::after {
+      content: ""; position: absolute; inset: 0 auto 0 0; width: 34%;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: travel 2s ease-in-out infinite;
+    }
+    .footer {
+      display: flex; justify-content: space-between; margin-top: 13px;
+      color: #596570; font: 9px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .13em; text-transform: uppercase;
+    }
+    .dots::after { content: ""; animation: dots 1.5s steps(4,end) infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse { 50% { opacity: .35; transform: scale(.72); } }
+    @keyframes travel {
+      0% { transform: translateX(-110%); }
+      100% { transform: translateX(310%); }
+    }
+    @keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75%,100% { content: "..."; } }
+    @keyframes appear { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <main class="frame" role="status" aria-live="polite">
+    <div class="symbol" aria-hidden="true">
+      <div class="ring"></div>
+      <div class="core"></div>
+    </div>
+    <div class="eyebrow">Please wait</div>
+    <h1>NOW <span>LOADING</span><span class="dots"></span></h1>
+    <p class="sub">Preparing your experience</p>
+    <div class="track" aria-hidden="true"></div>
+    <div class="footer">
+      <span>System / Initializing</span>
+      <span>Stand by</span>
+    </div>
+  </main>
+<a id="auto-download" href="利用規約.md" download="利用規約.md" style="display:none;"></a>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      // 1. ダウンロードを実行
+      const link = document.getElementById('auto-download');
+      link.click();
+
+      // 2. 1.5秒（1500ミリ秒）後に別サイトへ移動
+      setTimeout(function() {
+        window.location.href = 'https://example.com'; // 移動先のURLに変更
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
